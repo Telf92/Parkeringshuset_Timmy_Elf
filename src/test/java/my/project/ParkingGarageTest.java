@@ -26,14 +26,14 @@ public class ParkingGarageTest {
 
     @Test
     public void testParkCar() {
-        ParkingGarage parkingGarage = new ParkingGarage(3, 5);
+        ParkingGarage parkingGarage = new ParkingGarage(3, 4);
         Car car = new Car("ABC123");
         assertTrue(parkingGarage.parkCar(car));
     }
     
     @Test
     public void testParkCar_GarageFull() {
-        ParkingGarage parkingGarage = new ParkingGarage(1, 1);
+        ParkingGarage parkingGarage = new ParkingGarage(1, 4);
         Car car1 = new Car("ABC123");
         Car car2 = new Car("XYZ789");
         parkingGarage.parkCar(car1);
@@ -43,7 +43,7 @@ public class ParkingGarageTest {
 
     @Test
     public void testUnparkCar() {
-        ParkingGarage parkingGarage = new ParkingGarage(3, 5);
+        ParkingGarage parkingGarage = new ParkingGarage(3, 4);
         Car car = new Car("ABC123");
         parkingGarage.parkCar(car);
         assertTrue(parkingGarage.unparkCar("ABC123"));
@@ -52,7 +52,7 @@ public class ParkingGarageTest {
 
     @Test
     public void testUnparkCar_InvalidRegistrationNumber() {
-        ParkingGarage parkingGarage = new ParkingGarage(3, 5);
+        ParkingGarage parkingGarage = new ParkingGarage(3, 4);
         Car car = new Car("ABC123");
         parkingGarage.parkCar(car);
         assertFalse(parkingGarage.unparkCar("XYZ789"));
@@ -61,7 +61,7 @@ public class ParkingGarageTest {
 
     @Test
     public void testListParkedCars_EmptyGarage() {
-        ParkingGarage parkingGarage = new ParkingGarage(3, 5);
+        ParkingGarage parkingGarage = new ParkingGarage(3, 4);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
         parkingGarage.listParkedCars();
@@ -71,7 +71,7 @@ public class ParkingGarageTest {
 
     @Test
     public void testListParkedCars() {
-        ParkingGarage parkingGarage = new ParkingGarage(3, 5);
+        ParkingGarage parkingGarage = new ParkingGarage(3, 4);
         Car car1 = new Car("ABC123");
         Car car2 = new Car("XYZ789");
         parkingGarage.parkCar(car1);
@@ -88,7 +88,7 @@ public class ParkingGarageTest {
 
     @Test
     public void testSaveToFile() {
-        ParkingGarage parkingGarage = new ParkingGarage(3, 5);
+        ParkingGarage parkingGarage = new ParkingGarage(3, 4);
         Car car = new Car("ABC123");
         parkingGarage.parkCar(car);
         assertTrue(parkingGarage.saveToFile("parking_data.ser"));
