@@ -2,8 +2,6 @@ package my.project;
 
 import org.junit.jupiter.api.*;
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ParkingGarageTest {
