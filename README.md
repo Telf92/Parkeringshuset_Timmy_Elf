@@ -6,6 +6,8 @@ This project is a parking garage that can store cars by using their registration
 
 # Sources:
 ## Martin Fröjd's repository: https://github.com/fictive-reality/devops22-java
+## https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/HashMap.html
+## https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html
 
 ## Programs needed:
 
