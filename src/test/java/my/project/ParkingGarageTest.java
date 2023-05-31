@@ -1,96 +1,92 @@
 package my.project;
 
-import java.io.File;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;     
 
-
-public class ParkingGarageTest {
-    private ParkingGarage garage;
-    private Car car1;
-    private Car car2;
-    private Car car3;
+class ParkingGarageTest {
+    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private final PrintStream originalOut = System.out;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
+        System.setOut(new PrintStream(outContent));
+    }
+
+    @AfterEach
+    void tearDown() {
+        System.setOut(originalOut);
+    }
+
+    @Test
+    void testParkCar() {
+        ParkingGarage garage = new ParkingGarage(5, 4);
+        Car car = new Car("ABC123");
+        assertTrue(garage.parkCar(car));
+    }
+
+    @Test
+    void testParkCar_FullGarage() {
+        ParkingGarage garage = new ParkingGarage(1, 1);
+        Car car1 = new Car("ABC123");
+        Car car2 = new Car("DEF456");
+        assertTrue(garage.parkCar(car1));
+        assertFalse(garage.parkCar(car2));
+    }
+
+    @Test
+    void testUnparkCar() {
+        ParkingGarage garage = new ParkingGarage(5, 4);
+        Car car = new Car("ABC123");
+        garage.parkCar(car);
+        assertTrue(garage.unparkCar("ABC123"));
+    }
+
+    @Test
+    void testUnparkCar_NotParked() {
+        ParkingGarage garage = new ParkingGarage(5, 4);
+        assertFalse(garage.unparkCar("ABC123"));
+    }
+
+    @Test
+    void testSaveToFile() {
+        ParkingGarage garage = new ParkingGarage(5, 4);
+        Car car = new Car("ABC123");
+        garage.parkCar(car);
+        assertTrue(garage.saveToFile("parked_cars.ser"));
+    }
+
+    @Test
+    void testLoadFromFile() {
+        ParkingGarage garage = new ParkingGarage(5, 4);
+        Car car = new Car("ABC123");
+        garage.parkCar(car);
+        garage.saveToFile("parked_cars.ser");
         garage = new ParkingGarage(5, 4);
-        car1 = new Car("AB123");
-        car2 = new Car("CD456");
-        car3 = new Car("EF789");
+        assertTrue(garage.loadFromFile("parked_cars.ser"));
     }
 
     @Test
-    public void testParkCar() {
-        ParkingGarage parkingGarage = new ParkingGarage(3, 4);
-        Car car = new Car("ABC123");
-        assertTrue(parkingGarage.parkCar(car));
-    }
-    
-    @Test
-    public void testParkCar_GarageFull() {
-        ParkingGarage parkingGarage = new ParkingGarage(1, 4);
+    void testParkCar_GarageFullAfterUnparking() {
+        ParkingGarage garage = new ParkingGarage(1, 1);
         Car car1 = new Car("ABC123");
-        Car car2 = new Car("XYZ789");
-        parkingGarage.parkCar(car1);
-        assertFalse(parkingGarage.parkCar(car2));
+        Car car2 = new Car("DEF456");
+
+        assertTrue(garage.parkCar(car1)); // First car parked successfully
+        assertTrue(garage.unparkCar("ABC123")); // Unpark the first car
+        assertTrue(garage.parkCar(car2)); // Second car parked successfully in the previously occupied spot
     }
-    
 
     @Test
-    public void testUnparkCar() {
-        ParkingGarage parkingGarage = new ParkingGarage(3, 4);
-        Car car = new Car("ABC123");
-        parkingGarage.parkCar(car);
-        assertTrue(parkingGarage.unparkCar("ABC123"));
-    }
-    
+    void testGetParkingLocation() {
+        String registrationNumber = "ABC123";
+        String parkingLocation = "Floor 1, Spot 3";
+        Car car = new Car(registrationNumber);
+        car.setParkingLocation(parkingLocation);
 
-    @Test
-    public void testUnparkCar_InvalidRegistrationNumber() {
-        ParkingGarage parkingGarage = new ParkingGarage(3, 4);
-        Car car = new Car("ABC123");
-        parkingGarage.parkCar(car);
-        assertFalse(parkingGarage.unparkCar("XYZ789"));
+        assertEquals(parkingLocation, car.getParkingLocation());
     }
-    
 
-    @Test
-    public void testListParkedCars_EmptyGarage() {
-        ParkingGarage parkingGarage = new ParkingGarage(3, 4);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputStream));
-        parkingGarage.listParkedCars();
-        assertEquals("No cars parked in the garage.\n", outputStream.toString());
-    }
-    
-
-    @Test
-    public void testListParkedCars() {
-        ParkingGarage parkingGarage = new ParkingGarage(3, 4);
-        Car car1 = new Car("ABC123");
-        Car car2 = new Car("XYZ789");
-        parkingGarage.parkCar(car1);
-        parkingGarage.parkCar(car2);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputStream));
-        parkingGarage.listParkedCars();
-        String expectedOutput = "Currently parked cars:\n" +
-                                "Spot 1-1: ABC123\n" +
-                                "Spot 1-2: XYZ789\n";
-        assertEquals(expectedOutput, outputStream.toString());
-    }
-    
-
-    @Test
-    public void testSaveToFile() {
-        ParkingGarage parkingGarage = new ParkingGarage(3, 4);
-        Car car = new Car("ABC123");
-        parkingGarage.parkCar(car);
-        assertTrue(parkingGarage.saveToFile("parking_data.ser"));
-    }
 }

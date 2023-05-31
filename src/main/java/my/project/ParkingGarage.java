@@ -1,6 +1,6 @@
 package my.project;
 
-import java.io.*; // Used in Loading a file, I'm nott 100% sure how that code works.
+import java.io.*; // Used in Loading a file, I'm nott 100% sure how that code.
 import java.util.HashMap;
 import java.util.Map;
 
