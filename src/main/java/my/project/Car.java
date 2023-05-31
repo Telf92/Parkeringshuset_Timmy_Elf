@@ -2,6 +2,7 @@ package my.project;
 
 import java.io.Serializable;
 
+    // Car object with a registration number and parking location.
 public class Car implements Serializable {
     private String registrationNumber;
     private String parkingLocation;

@@ -1,13 +1,14 @@
 package my.project;
 
-import java.io.*;
+import java.io.*; // Used in Loading a file, I'm nott 100% sure how that code works.
 import java.util.HashMap;
 import java.util.Map;
 
+// Parking garage with a specified number of floors and parking spots per floor.
 public class ParkingGarage implements Serializable {
     private int numFloors;
     private int numSpotsPerFloor;
-    private Map<String, Car> parkedCars; // Map to hold parking spot to car mapping
+    private Map<String, Car> parkedCars;
 
     public ParkingGarage(int numFloors, int numSpotsPerFloor) {
         this.numFloors = numFloors;
@@ -16,15 +17,17 @@ public class ParkingGarage implements Serializable {
         initializeParkingSpots();
     }
 
+    // Sets all parking spots as empty.
     private void initializeParkingSpots() {
         for (int floor = 1; floor <= numFloors; floor++) {
             for (int spot = 1; spot <= numSpotsPerFloor; spot++) {
                 String parkingSpot = String.format("%d-%d", floor, spot);
-                parkedCars.put(parkingSpot, null); // initialize all spots as empty
+                parkedCars.put(parkingSpot, null);
             }
         }
     }
 
+    //  Parks a car in the garage using registration number.
     public boolean parkCar(Car car) {
         String parkingSpot = findAvailableSpot();
         if (parkingSpot == null) {
@@ -37,6 +40,7 @@ public class ParkingGarage implements Serializable {
         return true;
     }
 
+        // Find the first available spot in the garage.
     private String findAvailableSpot() {
         for (int floor = 1; floor <= numFloors; floor++) {
             for (int spot = 1; spot <= numSpotsPerFloor; spot++) {
@@ -46,9 +50,10 @@ public class ParkingGarage implements Serializable {
                 }
             }
         }
-        return null; // no available spot found
+        return null; // No available spot found = garage full.
     }
 
+    // Unparks a car with the specified registration number.
     public boolean unparkCar(String regNum) {
         for (String parkingSpot : parkedCars.keySet()) {
             Car car = parkedCars.get(parkingSpot);
@@ -63,6 +68,7 @@ public class ParkingGarage implements Serializable {
         return false;
     }
 
+    // Saves parked cars to file.
     public boolean saveToFile(String filename) {
         try {
             FileOutputStream fileOut = new FileOutputStream(filename);
@@ -78,11 +84,12 @@ public class ParkingGarage implements Serializable {
         }
     }
 
+    // Loads parked cars from file.
     public boolean loadFromFile(String filename) {
         try {
             FileInputStream fileIn = new FileInputStream(filename);
             ObjectInputStream in = new ObjectInputStream(fileIn);
-            parkedCars = (HashMap<String, Car>) in.readObject();
+            parkedCars = (HashMap<String, Car>) in.readObject(); // unchecked cast, I don't really know what this means but it does work.
             in.close();
             fileIn.close();
             System.out.printf("Parked cars have been loaded from %s.\n", filename);
@@ -97,6 +104,7 @@ public class ParkingGarage implements Serializable {
         }
     }
 
+        //Lists all parked cars and their registration number.
     public void listParkedCars() {
         if (parkedCars.isEmpty()) {
             System.out.println("No cars parked in the garage.");
@@ -111,6 +119,7 @@ public class ParkingGarage implements Serializable {
         }
     }
 
+        // Lists all available parking spots and also show the floors.
     public void displayAvailableSpots() {
         System.out.println("Available Parking Spots:");
         for (int floor = 1; floor <= numFloors; floor++) {

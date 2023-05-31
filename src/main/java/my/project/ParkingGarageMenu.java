@@ -2,6 +2,7 @@ package my.project;
 
 import java.util.Scanner;
 
+// Menu for the parking garage.
 public class ParkingGarageMenu {
     private static ParkingGarage garage = new ParkingGarage(5, 4);
     private static Scanner scanner = new Scanner(System.in);
@@ -9,7 +10,7 @@ public class ParkingGarageMenu {
     public static void main(String[] args) {
         boolean quit = false;
         while (!quit) {
-            System.out.println("\nWhat do you want to do?:");
+            System.out.println("\nWhat would you like to do?:");
             System.out.println("1 - Park a car");
             System.out.println("2 - Unpark a car");
             System.out.println("3 - List parked cars");
@@ -44,7 +45,7 @@ public class ParkingGarageMenu {
                     quit = true;
                     break;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    System.out.println("Not possible, please try again:");
                     break;
             }
         }
@@ -58,7 +59,7 @@ public class ParkingGarageMenu {
     }
 
     private static void unparkCar() {
-        System.out.println("Enter the registration number of the car to unpark:");
+        System.out.println("Enter the registration number of the car you want to unpark:");
         String regNum = scanner.nextLine();
         garage.unparkCar(regNum);
     }
@@ -68,13 +69,13 @@ public class ParkingGarageMenu {
     }
 
     private static void saveToFile() {
-        System.out.println("Enter the name of the file to save the parked cars to:");
+        System.out.println("Enter the name of the file you want to save the parked car(s) to:");
         String filename = scanner.nextLine();
         garage.saveToFile(filename);
     }
 
     private static void loadFromFile() {
-        System.out.println("Enter the name of the file to load parked cars from:");
+        System.out.println("Enter the name of the file to load parked car(s) from:");
         String filename = scanner.nextLine();
         garage.loadFromFile(filename);
     }
