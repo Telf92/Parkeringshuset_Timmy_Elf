@@ -16,7 +16,12 @@ public class ParkingGarage implements Serializable {
         initializeParkingSpots();
     }
 
-    // Sets all parking spots as empty.
+        /**
+     * Sets all parking spots as empty given the parameters.
+     *
+     * @param numFloors
+     * @param numSpotsPerFloor
+     */
     private void initializeParkingSpots() {
         for (int floor = 1; floor <= numFloors; floor++) {
             for (int spot = 1; spot <= numSpotsPerFloor; spot++) {
@@ -46,6 +51,7 @@ public class ParkingGarage implements Serializable {
 
     /**
      * Find the first available spot in the garage.
+     * 
      * @return String
      */
     private String findAvailableSpot() {
@@ -82,6 +88,7 @@ public class ParkingGarage implements Serializable {
 
     /**
      * Saves parked cars to file choosen by the user.
+     * 
      * @param filename
      * @return boolean
      */
@@ -126,7 +133,7 @@ public class ParkingGarage implements Serializable {
         }
     }
 
-        /**
+    /**
      * Lists all parked cars and their registration number.
      *
      * @param numFloors
@@ -146,7 +153,7 @@ public class ParkingGarage implements Serializable {
         }
     }
 
-        /**
+    /**
      * Lists all available parking spots and also show the floors.
      *
      * @param numFloors

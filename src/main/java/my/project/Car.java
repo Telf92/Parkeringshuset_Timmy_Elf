@@ -13,6 +13,8 @@ public class Car implements Serializable {
 
     
     /** 
+     * Registration number.
+     * 
      * @return String
      */
     public String getRegistrationNumber() {
@@ -21,6 +23,8 @@ public class Car implements Serializable {
 
     
     /** 
+     * Gets Parking location.
+     * 
      * @return String
      */
     public String getParkingLocation() {
@@ -29,6 +33,7 @@ public class Car implements Serializable {
 
     
     /** 
+     * Shows parking location.
      * @param parkingLocation
      */
     public void setParkingLocation(String parkingLocation) {
