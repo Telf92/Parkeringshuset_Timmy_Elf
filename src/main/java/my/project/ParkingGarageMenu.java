@@ -2,11 +2,13 @@ package my.project;
 
 import java.util.Scanner;
 
-// Menu for the parking garage.
 public class ParkingGarageMenu {
     private static ParkingGarage garage = new ParkingGarage(5, 4);
     private static Scanner scanner = new Scanner(System.in);
 
+    /**
+     * @param args
+     */
     public static void main(String[] args) {
         boolean quit = false;
         while (!quit) {

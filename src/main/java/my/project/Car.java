@@ -11,14 +11,26 @@ public class Car implements Serializable {
         this.registrationNumber = registrationNumber;
     }
 
+    
+    /** 
+     * @return String
+     */
     public String getRegistrationNumber() {
         return registrationNumber;
     }
 
+    
+    /** 
+     * @return String
+     */
     public String getParkingLocation() {
         return parkingLocation;
     }
 
+    
+    /** 
+     * @param parkingLocation
+     */
     public void setParkingLocation(String parkingLocation) {
         this.parkingLocation = parkingLocation;
     }
